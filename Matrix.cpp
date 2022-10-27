@@ -9,18 +9,19 @@
 #include <vector>
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 
 using std::vector;
 using std::sqrt;
 
-Matrix::Matrix(vector<float> stuff, int rows, int cols) {
+Matrix::Matrix(vector<double> stuff, int rows, int cols) {
     data = stuff;
     nrow = rows;
     ncol = cols;
 }
 
 Matrix::Matrix(int rows, int cols) {
-    vector<float> data(rows * cols);
+    vector<double> data(rows * cols);
     setRows(rows);
     setCols(cols);
 }
@@ -33,28 +34,37 @@ void Matrix::setCols(int x) {
     ncol = x;
 }
 
-int Matrix::mean() {
-        return sum()/size();
-    }
-
-float Matrix::var() {
-    float sum = 0;
-    int n = size();
+double Matrix::mean() {
     
+    double avg = sum() / (data.size());
+    return avg;
+    
+}
+
+double Matrix::var() {
+    double sum = 0;
+    int n = size();
+    double avg = mean();
+    for (int i =0; i < size(); i++) {
+        double diff = data[i] - avg;
+        sum += diff*diff;
+    }
     return sum/(n-1);
 }
 
-unsigned long Matrix::size() {
+int Matrix::size() {
     return data.size();
 }
 
-float Matrix::sd() {
+double Matrix::sd() {
     return sqrt(var());
 }
 
-float Matrix::sum() {
-    float sum = 0;
-    
+double Matrix::sum() {
+    double sum = 0;
+    for (int i =0; i < size(); i++) {
+        sum+= data[i];
+    }
     return sum;
 }
 
@@ -62,17 +72,25 @@ Matrix Matrix::cov() {
     unsigned dimension = ncols();
     unsigned n = nrows();
     Matrix covariance = Matrix(dimension, dimension);
-    
+    for (int i = 0 ; i < ncols(); i++) {
+        
+    }
     
     return covariance;
 }
 
 void Matrix::print() {
     for (int i =0; i < nrow; i ++) {
+        std::cout << "[";
         for (int j =0; j < ncol; j ++) {
-            std::cout << "[" << data[i*ncol + j] << "] ";
+            if (j == ncol - 1) {
+                std::cout << data[i*ncol + j];
+            }
+            else {
+                std::cout << data[i*ncol + j] << " ";
+            }
         }
-        std::cout << std::endl;
+        std::cout << "] " << std::endl;
     }
 }
 
@@ -82,4 +100,19 @@ int Matrix::nrows() {
 
 int Matrix::ncols() {
     return ncol;
+}
+
+Matrix Matrix::standardize() {
+    
+    for (int i = 0; i < ncols(); i++) {
+        vector<double> column;
+        for (int j = 0; i < nrows(); j++) {
+            column.push_back(data[i*ncols() + j]);
+        }
+        Matrix temp = Matrix(column, nrows(), ncols());
+        double avg = temp.mean();
+        double sd = temp.sd();
+    }
+    Matrix temp = Matrix(1,1);
+    return temp;
 }
