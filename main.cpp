@@ -10,10 +10,8 @@
 
 
 int main(int argc, const char * argv[]) {
-    Matrix test = Matrix({{46, 69, 32, 60, 52, 41}});
+    Matrix test = Matrix({46, 69, 32, 60, 52, 41}, 2,3);
     
-    
-    std::cout << test.mean() << "\n";
-    std::cout << test.var() << "\n" ;
+    test.print();
     return 0;
 }

@@ -8,21 +8,19 @@
 #include "Matrix.hpp"
 #include <vector>
 #include <cmath>
+#include <iostream>
 
 using std::vector;
 using std::sqrt;
 
-Matrix ::Matrix(vector<vector<float>> stuff) {
+Matrix::Matrix(vector<float> stuff, int rows, int cols) {
     data = stuff;
-    nrow = data.size();
-    ncol = data[0].size();
+    nrow = rows;
+    ncol = cols;
 }
 
 Matrix::Matrix(int rows, int cols) {
-    vector<vector<float>> data(rows);
-    for (int i =0; i < rows; i++) {
-        data[i].resize(cols);
-    }
+    vector<float> data(rows * cols);
     setRows(rows);
     setCols(cols);
 }
@@ -42,21 +40,12 @@ int Matrix::mean() {
 float Matrix::var() {
     float sum = 0;
     int n = size();
-    for (int i=0; i < data.size(); i++) {
-        for (int j =0; j < data[i].size(); j++) {
-            float diff = data[i][j] - mean();
-            sum += diff * diff;
-        }
-    }
+    
     return sum/(n-1);
 }
 
-int Matrix::size() {
-    int count = 0;
-    for (int i =0; i < data.size(); i++) {
-        count += data[i].size();
-    }
-    return count;
+unsigned long Matrix::size() {
+    return data.size();
 }
 
 float Matrix::sd() {
@@ -65,15 +54,32 @@ float Matrix::sd() {
 
 float Matrix::sum() {
     float sum = 0;
-    for (int i = 0; i < nrow; i++) {
-        for (int j = 0; j < ncol; j++) {
-            sum += data[i][j];
-        }
-    }
+    
     return sum;
 }
 
-//unsigned Matrix::dim() {
-//    unsigned dimensions[2] = {nrow, ncol};
-//    return dimensions
-//}
+Matrix Matrix::cov() {
+    unsigned dimension = ncols();
+    unsigned n = nrows();
+    Matrix covariance = Matrix(dimension, dimension);
+    
+    
+    return covariance;
+}
+
+void Matrix::print() {
+    for (int i =0; i < nrow; i ++) {
+        for (int j =0; j < ncol; j ++) {
+            std::cout << "[" << data[i*ncol + j] << "] ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+int Matrix::nrows() {
+    return nrow;
+}
+
+int Matrix::ncols() {
+    return ncol;
+}

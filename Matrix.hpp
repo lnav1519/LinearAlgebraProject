@@ -17,21 +17,23 @@
 
 class Matrix {
 public:
-    Matrix(std::vector<std::vector<float>> stuff);
+    Matrix(std::vector<float> stuff, int rows, int cols);
     Matrix(int rows, int cols);
     int mean();
     float var();
-    int size();
+    unsigned long size();
     float sd();
     float sum();
     Matrix cov();
     int nrows();
     int ncols();
     unsigned dim();
+    void print();
 private:
-    std::vector<std::vector<float>> data;
+    std::vector<float> data;
     unsigned nrow;
     unsigned ncol;
+    
     
     void setRows(int x);
     void setCols(int x);
