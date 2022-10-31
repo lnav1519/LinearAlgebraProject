@@ -17,7 +17,7 @@
 
 class Matrix {
 public:
-    Matrix(std::vector<double> stuff, int rows, int cols);
+    Matrix(std::vector<double> stuff, int rows, int cols, bool byrow=true);
     Matrix(int rows, int cols);
     double mean();
     double var();
@@ -30,6 +30,9 @@ public:
     unsigned dim();
     void print();
     Matrix standardize();
+    
+    Matrix getCols(std::vector<int> columns);
+    Matrix getRows(std::vector<int> rows);
 private:
     std::vector<double> data;
     unsigned nrow;

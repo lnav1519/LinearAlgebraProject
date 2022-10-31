@@ -14,10 +14,23 @@
 using std::vector;
 using std::sqrt;
 
-Matrix::Matrix(vector<double> stuff, int rows, int cols) {
-    data = stuff;
+Matrix::Matrix(vector<double> stuff, int rows, int cols, bool byrow) {
     nrow = rows;
     ncol = cols;
+    if (byrow == false) {
+        vector<double> temp(stuff.size());
+        for (int i =0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                double value = stuff[j * cols + i];
+                auto it = temp.begin() + (i * cols + j);
+                temp.insert(it, value);
+            }
+        }
+        data = temp;
+    }
+    else {
+        data = stuff;
+    }
 }
 
 Matrix::Matrix(int rows, int cols) {
@@ -115,4 +128,11 @@ Matrix Matrix::standardize() {
     }
     Matrix temp = Matrix(1,1);
     return temp;
+}
+
+
+Matrix Matrix::getCols(<#vector<int>#> columns) {
+    for (int i =0; i < columns.size(); i++) {
+        
+    }
 }
