@@ -14,6 +14,18 @@
 using std::vector;
 using std::sqrt;
 
+/**
+ * Constructor for the Matrix Object
+ *
+ * @param stuff
+ *      The vector of doubles containing the data to be contained in the Matrix
+ * @param rows
+ *      The number of rows the Matrix will have
+ * @param cols
+ *      The number of columns the Matrix will have
+ * @param byrow
+ *      Boolean for whether or not the data will be read into the Matrix by row. Reads in by column if false.
+ */
 Matrix::Matrix(vector<double> stuff, int rows, int cols, bool byrow) {
     nrow = rows;
     ncol = cols;
@@ -33,15 +45,18 @@ Matrix::Matrix(vector<double> stuff, int rows, int cols, bool byrow) {
     }
 }
 
+
 Matrix::Matrix(int rows, int cols) {
     vector<double> data(rows * cols);
     setRows(rows);
     setCols(cols);
 }
 
+
 void Matrix::setRows(int x) {
     nrow = x;
 }
+
 
 void Matrix::setCols(int x) {
     ncol = x;
